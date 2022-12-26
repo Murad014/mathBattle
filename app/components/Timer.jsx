@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import PropType from 'prop-types';
 
-
 function Timer(){
     return(
         <div className="gridPoint">
