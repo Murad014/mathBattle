@@ -5,6 +5,7 @@ import {Fragment} from "react";
 
 
 function PlayerTable(){
+
     return(
         <table className="table table-hover gamer-table">
             <thead>
@@ -34,13 +35,15 @@ function PlayerTable(){
     );
 }
 
-function Player(){
+function Player(props){
 
     return(
 
         <div className="gridPlayerOne">
             <div id="playerOne">
-                <h3>Player One</h3>
+                <h3 style={{fontWeight: "bold"}}>
+                    {(props.playerName !== undefined && props.playerName !== null) ? props.playerName.toUpperCase() : null}
+                </h3>
             </div>
 
             <div id="playerOne">
