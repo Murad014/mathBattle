@@ -18,4 +18,22 @@ document.addEventListener('keypress', (event) => {
 })
 
 
+// let mSec = 0, sec = 0, mint = 0;
+// let date = Date.now();
+//
+// /* FOR TIMER */
+// setInterval(() => {
+//     let root2 = document.getElementById("timerH2");
+//     let date2 = Date.now();
+//     let result =  date2 - date;
+//
+//     mSec = result % 1000;
+//     sec = Math.floor(result / 1000) % 60;
+//     mint = Math.floor(result / 60000);
+//
+//     root2.innerHTML = toMMSSMS(mint, sec, mSec);
+//
+// },0);
+// /* END - FOR TIMER */
+
 
