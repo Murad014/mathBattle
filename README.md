@@ -1,2 +1,2 @@
 # Math Battle Game
-In order to just two players. Math Battle game for computer devices.
+In order to just two players. Who solve the equation first is winner.
