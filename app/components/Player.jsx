@@ -4,7 +4,7 @@ import PropType from 'prop-types';
 import {Fragment} from "react";
 
 
-function PlayerTable(){
+function PlayerTable(props){
 
     return(
         <table className="table table-hover gamer-table">
@@ -16,18 +16,18 @@ function PlayerTable(){
             </thead>
 
             <tbody className="table-row">
-            <tr>
-                <td>52+65</td>
-                <td>2.00544</td>
-            </tr>
-            <tr>
-                <td>342+2342</td>
-                <td>3.025</td>
-            </tr>
-            <tr>
-                <td>532+6235</td>
-                <td>5.06556</td>
-            </tr>
+
+            {props.gamerTable?.map((value, id) => {
+                return(
+                    <tr key={id}>
+                        <td>{value[0]}</td>
+                        <td>{value[1]}</td>
+                    </tr>
+
+                );
+            })}
+
+
 
             </tbody>
 
@@ -39,7 +39,7 @@ function Player(props){
 
     return(
 
-        <div className="gridPlayerOne">
+        <div className="gridPlayerOne  for-scroll">
             <div id="playerOne">
                 <h3 style={{fontWeight: "bold"}}>
                     {(props.playerName !== undefined && props.playerName !== null) ? props.playerName.toUpperCase() : null}
@@ -48,7 +48,7 @@ function Player(props){
 
             <div id="playerOne">
 
-                <PlayerTable />
+                <PlayerTable gamerTable={props.gamerTable}/>
 
             </div>
 

@@ -1,4 +1,4 @@
-
+import toMMSSMS from "./Timer";
 
 
 export default function generateEquation(fl) {
@@ -7,7 +7,6 @@ export default function generateEquation(fl) {
                 "newEquationRight": Math.ceil(Math.random() * Math.pow(10, fl))
         };
 }
-
 
 
 
