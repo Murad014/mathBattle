@@ -6,6 +6,7 @@ import RoundResult from "./RoundResult";
 import toMMSSMS from '../utils/Timer'
 import withSearchParams from './withSearchParams';
 import generateEquation from '../utils/Helper'
+import WinnerMessage from "./WinnerMessage";
 
 
 class Battle extends React.Component{
@@ -27,7 +28,8 @@ class Battle extends React.Component{
         timerIntervalID: null,
 
         playerOneScore: 0,
-        playerTwoScore: 0
+        playerTwoScore: 0,
+        maxLimit: 0
 
     }
 
@@ -96,16 +98,25 @@ class Battle extends React.Component{
     }
 
     componentDidUpdate() {
+
         if(this.state.resetInterval === true){
             clearInterval(this.state.timerIntervalID-1);
             clearInterval(this.state.timerIntervalID);
-
             this.setState({
                 currentDate: Date.now(),
                 resetInterval: false,
                 timerIntervalID: this.timerFunc()
             })
         }
+
+    }
+
+    setMaxLimit = (limit) => {
+        this.setState({maxLimit: parseInt(limit)})
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.timerIntervalID);
     }
 
     componentDidMount() {
@@ -113,8 +124,10 @@ class Battle extends React.Component{
 
         const playerOne = sp.get("playerOne");
         const playerTwo = sp.get("playerTwo");
+        const maxLimit = sp.get("limit")
 
         this.setPlayers({playerOne, playerTwo});
+        this.setMaxLimit(maxLimit)
         this.setEquation();
 
         /* FOR KEY PRESS of Players */
@@ -168,14 +181,34 @@ class Battle extends React.Component{
     }
 
 
+
+
     render(){
+        const {maxLimit, playerOneScore, playerTwoScore, playerOneName, playerTwoName, timerIntervalID} = this.state;
+
+        if(maxLimit === playerOneScore + playerTwoScore) {
+            return (
+                <WinnerMessage
+                    mcolor={(playerOneScore === playerTwoScore) ? "white" : "#66FF99"}
+                    playerOneScore={playerOneScore}
+                    playerTwoScore={playerTwoScore}
+                    playerNames={[playerOneName, playerTwoName]}
+                    timerInterval={timerIntervalID}
+
+                />
+            )
+        }
 
         return (
             <div className="grid-container">
                     <Equation left={this.state.equationLeft} right={this.state.equationRight}/>
-                    <Player playerName={this.state.playerOneName} gamerTable={this.state.playerOneTable}/>
+                    <Player playerName={this.state.playerOneName}
+                            gamerTable={this.state.playerOneTable}/>
+
                     <Timer />
-                    <Player playerName={this.state.playerTwoName} gamerTable={this.state.playerTwoTable}/>
+                    <Player playerName={this.state.playerTwoName}
+                            gamerTable={this.state.playerTwoTable}/>
+
                     <RoundResult playerOneScore={this.state.playerOneScore}
                                  playerTwoScore={this.state.playerTwoScore} />
             </div>

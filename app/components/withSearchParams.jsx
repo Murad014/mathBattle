@@ -7,7 +7,7 @@ export default function withSearchParams(Component){
 
     return function ComponentWithSearchParams (props){
         const [searchParams] = useSearchParams();
-        console.log(useSearchParams())
+        // console.log(useSearchParams())
         return <Component {...props} router={{ searchParams }} />
     }
 
