@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom/client';
 import {useSearchParams} from 'react-router-dom';
 
 

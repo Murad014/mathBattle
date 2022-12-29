@@ -26,6 +26,7 @@ class Battle extends React.Component{
         currentDate: Date.now(),
         resetInterval: true,
         timerIntervalID: null,
+        level: 2,
 
         playerOneScore: 0,
         playerTwoScore: 0,
@@ -42,7 +43,8 @@ class Battle extends React.Component{
     }
 
     setEquation(){
-        let {newEquationLeft, newEquationRight } = generateEquation(1);
+
+        let {newEquationLeft, newEquationRight } = generateEquation(this.state.level);
 
         this.setState({
             equationLeft: newEquationLeft,
@@ -71,6 +73,7 @@ class Battle extends React.Component{
                     this.state.equation,
                     document.getElementById("timerH2").innerHTML
                 ]);
+
             else
                 playerIITable.push([
                     this.state.equation,
@@ -93,20 +96,42 @@ class Battle extends React.Component{
 
             this.setEquation();
         }
+
         else
             this.setState(object);
     }
 
     componentDidUpdate() {
+        console.log("Update");
 
         if(this.state.resetInterval === true){
-            clearInterval(this.state.timerIntervalID-1);
-            clearInterval(this.state.timerIntervalID);
+
+            const interval_id = window.setInterval(function(){}, Number.MAX_SAFE_INTEGER);
+            for (let i = 1; i < interval_id; i++)
+                window.clearInterval(i);
+
+
             this.setState({
                 currentDate: Date.now(),
                 resetInterval: false,
                 timerIntervalID: this.timerFunc()
             })
+        }
+
+        const {maxLimit, playerOneScore, playerTwoScore, playerOneName, playerTwoName, timerIntervalID} = this.state;
+
+        if(maxLimit <= playerOneScore + playerTwoScore) {
+            clearInterval(this.state.timerIntervalID);
+            let message;
+
+            if(playerOneScore > playerTwoScore)
+                message = playerOneName + " is Winner!";
+            else if(playerOneScore < playerTwoScore)
+                message = playerTwoName + " is Winner!";
+            else
+                message = "Nobody is Winner";
+
+            document.getElementById("equation").innerHTML = message;
         }
 
     }
@@ -115,19 +140,27 @@ class Battle extends React.Component{
         this.setState({maxLimit: parseInt(limit)})
     }
 
+    setLevel = (level) => {
+        this.setState({level: parseInt(level)})
+    }
+
     componentWillUnmount() {
         clearInterval(this.state.timerIntervalID);
     }
 
     componentDidMount() {
+        console.log("DidMount")
         const sp = this.props.router.searchParams;
 
         const playerOne = sp.get("playerOne");
         const playerTwo = sp.get("playerTwo");
         const maxLimit = sp.get("limit")
+        const level = sp.get("level")
 
+        this.setLevel(level);
         this.setPlayers({playerOne, playerTwo});
-        this.setMaxLimit(maxLimit)
+        this.setMaxLimit(maxLimit);
+
         this.setEquation();
 
         /* FOR KEY PRESS of Players */
@@ -184,20 +217,6 @@ class Battle extends React.Component{
 
 
     render(){
-        const {maxLimit, playerOneScore, playerTwoScore, playerOneName, playerTwoName, timerIntervalID} = this.state;
-
-        if(maxLimit === playerOneScore + playerTwoScore) {
-            return (
-                <WinnerMessage
-                    mcolor={(playerOneScore === playerTwoScore) ? "white" : "#66FF99"}
-                    playerOneScore={playerOneScore}
-                    playerTwoScore={playerTwoScore}
-                    playerNames={[playerOneName, playerTwoName]}
-                    timerInterval={timerIntervalID}
-
-                />
-            )
-        }
 
         return (
             <div className="grid-container">
@@ -206,6 +225,7 @@ class Battle extends React.Component{
                             gamerTable={this.state.playerOneTable}/>
 
                     <Timer />
+
                     <Player playerName={this.state.playerTwoName}
                             gamerTable={this.state.playerTwoTable}/>
 

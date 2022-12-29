@@ -7,10 +7,12 @@ function RoundResult(props){
     let playerTwoColor = (props.playerOneScore > props.playerTwoScore) ? "#e04242": "#66FF99";
 
     return (
-        <div className="gridFooter">
-            <p style={{float: "left", color: playerOneColor}}>{props.playerOneScore}</p>
-            <p style={{float: "right", color: playerTwoColor}}>{props.playerTwoScore}</p>
-        </div>
+
+            <div className="gridFooter">
+                <p style={{float: "left", color: playerOneColor}}>{props.playerOneScore}</p>
+                <p style={{float: "right", color: playerTwoColor}}>{props.playerTwoScore}</p>
+            </div>
+
     );
 }
 
