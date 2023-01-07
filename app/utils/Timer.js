@@ -1,6 +1,6 @@
 
-let date2 = new Date();
-export default function toMMSSMS(mint, sec, mSec){
+
+export function toMMSSMS(mint, sec, mSec){
     mSec = (mSec <= 9) ? "00" + mSec : mSec;
     mSec = (mSec < 100 && mSec >= 9) ? "0" + mSec : mSec;
     sec = (sec <= 9) ? "0" + sec : sec;
@@ -9,13 +9,20 @@ export default function toMMSSMS(mint, sec, mSec){
     return mint + ":" + sec + ":" + mSec;
 }
 
+export function calcTimer(result){
+    let mSec = 0, sec = 0, mint = 0;
+    mSec = result % 1000;
+    sec = Math.floor(result / 1000) % 60;
+    mint = Math.floor(result / 60000);
 
-document.addEventListener('keypress', (event) => {
-    let name = event.key;
-    let code = event.code;
+    return {
+        "mSec": mSec,
+        "sec": sec,
+        "mint": mint
+    }
+}
 
 
-})
 
 
 // let mSec = 0, sec = 0, mint = 0;

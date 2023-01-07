@@ -2,10 +2,10 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import PropType from 'prop-types';
 import {Fragment} from "react";
-
+import { BattleContext } from '../utils/BattleContext';
 
 function PlayerTable(props){
-
+    
     return(
         <table className="table table-hover gamer-table">
             <thead>
@@ -20,14 +20,12 @@ function PlayerTable(props){
             {props.gamerTable?.map((value, id) => {
                 return(
                     <tr key={id}>
-                        <td>{value[0]}</td>
-                        <td>{value[1]}</td>
+                        <td>{value.equation}</td>
+                        <td>{value.timer}</td>
                     </tr>
 
                 );
             })}
-
-
 
             </tbody>
 
@@ -35,26 +33,39 @@ function PlayerTable(props){
     );
 }
 
-function Player(props){
+class Player extends React.Component{
 
-    return(
+    constructor(props){
+        super(props);
 
-        <div className="gridPlayerOne  for-scroll">
-            <div id="playerOne">
-                <h3 style={{fontWeight: "bold"}}>
-                    {(props.playerName !== undefined && props.playerName !== null) ? props.playerName.toUpperCase() : null}
-                </h3>
+        /* this.state = {
+            answerTable: []
+        } */
+    }
+
+
+
+    render(){
+                
+
+        return(
+            <div className="gridPlayerOne">
+                <div id="playerOne">
+                    <h3 style={{fontWeight: "bold"}}>
+                        {(this.props.playerName !== undefined && this.props.playerName !== null) ? this.props.playerName.toUpperCase() : null}
+                    </h3>
+                </div>
+
+                <div id="playerOne" className="for-scroll">
+                    <PlayerTable gamerTable={this.props.ansTable}/>
+                </div>
+
+            <h3>{this.props.playerAnswer}</h3>
+
             </div>
-
-            <div id="playerOne">
-
-                <PlayerTable gamerTable={props.gamerTable}/>
-
-            </div>
-
-        </div>
-
-    );
+        )
+    }
+    
 }
 
 export default Player;
