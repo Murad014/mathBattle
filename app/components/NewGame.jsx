@@ -11,7 +11,8 @@ class NewGame extends React.Component{
     state = {
         playerOne: null,
         playerTwo: null,
-        maxLimit: 0
+        maxLimit: 0,
+        level: 5
 
     }
 
@@ -34,30 +35,37 @@ class NewGame extends React.Component{
         })
     }
 
+    setLevel = (level) => {
+        this.setState({
+            level: level
+        })
+    }
+
 
 
 
 
     render() {
-        let { playerOne, playerTwo, maxLimit } = this.state;
+        let { playerOne, playerTwo, maxLimit, level } = this.state;
         //console.log(playerOne + ", " + playerTwo);
 
         return (
-            <React.Fragment>
-                <div className="newgameDiv">
-                    <input type="text" name="playerOne" id="playerOne" placeholder="Player One" onChange={(e) => this.setPlayerOne(e.target.value)} />
-                    <input type="text" name="playerTwo" id="playerTwo" placeholder="Player Two" onChange={(e) => this.setPlayerTwo(e.target.value)}/>
-                    <input type="text" name="maxLimit" id="maxLimit" placeholder="Max Limit" onChange={(e) => this.setMaxLimit(e.target.value)}/>
 
-                    <Link to={{
-                        pathname: 'battle',
-                        search: `playerOne=${playerOne}&playerTwo=${playerTwo}&limit=${maxLimit}`
-                    }}>
+            <div className="newgameDiv">
+                <input type="text" name="playerOne" id="playerOne" placeholder="Player One" onChange={(e) => this.setPlayerOne(e.target.value)} />
+                <input type="text" name="playerTwo" id="playerTwo" placeholder="Player Two" onChange={(e) => this.setPlayerTwo(e.target.value)}/>
+                <input type="text" name="maxLimit" id="maxLimit" placeholder="Max Limit" onChange={(e) => this.setMaxLimit(e.target.value)}/>
+                <input type="text" name="level" id="level" placeholder="Level" onChange={(e) => this.setLevel(e.target.value)}/>
 
-                        <button className="fightButton" id="fightButton">FIGHT</button>
-                    </Link>
-                </div>
-            </React.Fragment>
+                <Link to={{
+                    pathname: 'battle',
+                    search: `playerOne=${playerOne}&playerTwo=${playerTwo}&limit=${maxLimit}&level=${level}`
+                }}>
+
+                    <button className="fightButton" id="fightButton">FIGHT</button>
+                </Link>
+            </div>
+
         )
     }
 

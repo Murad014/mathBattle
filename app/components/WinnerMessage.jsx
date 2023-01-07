@@ -17,12 +17,8 @@ function WinnerMessage(props){
             <Link to={{
                 pathname: '/',
             }}>
-
                 <button className="fightButton" id="fightButton">NEW GAME</button>
-
             </Link>
-
-
         </div>
     )
 }
